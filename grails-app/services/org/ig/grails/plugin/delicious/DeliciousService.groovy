@@ -3,6 +3,7 @@ package org.ig.grails.plugin.delicious
 import org.codehaus.groovy.grails.commons.ConfigurationHolder
 import del.icio.us.Delicious
 import org.ig.grails.plugin.delecious.DeliciousPost
+import org.ig.grails.plugin.delecious.DeliciousResponse
 
 class DeliciousService {
 
@@ -43,15 +44,26 @@ class DeliciousService {
     * Add Post to Delicious
     */
 
-    public boolean postNewBookmark(DeliciousPost deliciousPost) {
-        return deliciousPost.deliciousConnection.addPost(
-                deliciousPost.url,
-                deliciousPost.description,
-                deliciousPost.notes,
-                deliciousPost.tags.join(" "),
-                deliciousPost.date,
-                deliciousPost.replace,
-                deliciousPost.shared
+    public DeliciousResponse<Boolean> postNewBookmark(DeliciousPost deliciousPost) {
+        def dr = new DeliciousResponse<Boolean>(
+                entity: deliciousPost.deliciousConnection.addPost(
+                        deliciousPost.url,
+                        deliciousPost.description,
+                        deliciousPost.notes,
+                        deliciousPost.tags.join(" "),
+                        deliciousPost.date,
+                        deliciousPost.replace,
+                        deliciousPost.shared
+                ),
+                status: deliciousPost.deliciousConnection.getHttpResult()
         )
+        dr.status = deliciousPost.deliciousConnection.getHttpResult()
+        dr
     }
+
+
+    /*
+     * Get Updates For User, Get Pending unread updates since his/her last login
+     */
+
 }

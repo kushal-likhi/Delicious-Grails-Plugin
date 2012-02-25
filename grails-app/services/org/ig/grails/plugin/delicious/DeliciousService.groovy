@@ -44,7 +44,7 @@ class DeliciousService {
     * Add Post to Delicious
     */
 
-    public DeliciousResponse<Boolean> postNewBookmark(DeliciousPost deliciousPost) {
+    public DeliciousResponse<Boolean> addPost(DeliciousPost deliciousPost) {
         def dr = new DeliciousResponse<Boolean>(
                 entity: deliciousPost.deliciousConnection.addPost(
                         deliciousPost.url,
@@ -57,10 +57,21 @@ class DeliciousService {
                 ),
                 status: deliciousPost.deliciousConnection.getHttpResult()
         )
-        dr.status = deliciousPost.deliciousConnection.getHttpResult()
         dr
     }
 
+    public DeliciousResponse<Boolean> updatePost(DeliciousPost deliciousPost) {
+        deliciousPost.replace = true
+        return addPost(deliciousPost)
+    }
+
+    public DeliciousResponse<DeliciousPost> deletePost(DeliciousPost deliciousPost) {
+        deliciousPost.deliciousConnection.deletePost(deliciousPost.url)
+        return new DeliciousResponse<DeliciousPost>(
+                entity: deliciousPost,
+                status: deliciousPost.deliciousConnection.getHttpResult()
+        )
+    }
 
     /*
      * Get Updates For User, Get Pending unread updates since his/her last login

@@ -11,11 +11,10 @@ class DeliciousGrailsPlugin {
     ]
 
     // TODO Fill in these fields
-    def author = "Your name"
-    def authorEmail = ""
-    def title = "Plugin summary/headline"
-    def description = '''\\
-Brief description of the plugin.
+    def author = "Kushal Likhi, Gaurav Sharma"
+    def authorEmail = "kushal@intelligrape.com"
+    def title = "Delicious Plugin"
+    def description = '''A plugin impplementing the Del.icio.us API
 '''
 
     // URL to the plugin's documentation
